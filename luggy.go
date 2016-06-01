@@ -18,6 +18,10 @@ func main() {
 		c.Join("#utdlug")
 	})
 	c.AddCallback("PRIVMSG", func(e *irc.Event) {
+		msg := e.Message()
+		if strings.HasPrefix(msg, "[WIKIPEDIA]") {
+			return
+		}
 		for _, link := range xurls.Relaxed.FindAllString(e.Message(), -1) {
 			u, err := url.Parse(link)
 			if err != nil {
