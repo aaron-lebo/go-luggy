@@ -1,14 +1,15 @@
 package main
 
 import (
-	"golang.org/x/net/html"
-	"golang.org/x/net/html/atom"
 	"net/http"
 	"net/url"
+	"strings"
 
 	"github.com/mvdan/xurls"
 	"github.com/thoj/go-ircevent"
 	"github.com/yhat/scrape"
+	"golang.org/x/net/html"
+	"golang.org/x/net/html/atom"
 )
 
 func main() {
@@ -22,7 +23,7 @@ func main() {
 			if err != nil {
 				continue
 			}
-			if u.Scheme != "http" {
+			if !strings.HasPrefix(u.Scheme, "http") {
 				link = "http://" + link
 			}
 			res, err := http.Get(link)
