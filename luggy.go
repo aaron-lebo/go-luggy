@@ -18,10 +18,11 @@ func main() {
 		c.Join("#utdlug")
 	})
 	c.AddCallback("PRIVMSG", func(e *irc.Event) {
-		if e.Nick == "lugbrahtomy" {
+		msg := e.Message()
+		if e.Nick == "lugbrahtomy" && strings.Contains(msg, "wikipedia") {
 			return
 		}
-		for _, link := range xurls.Relaxed.FindAllString(e.Message(), -1) {
+		for _, link := range xurls.Relaxed.FindAllString(msg, -1) {
 			u, err := url.Parse(link)
 			if err != nil {
 				continue
